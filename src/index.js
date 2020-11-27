@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { cache } from './cache';
+
+const client = new ApolloClient({
+  uri: 'https://pangaea-interviews.now.sh/api/graphql',
+  cache
+});
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>
+  ,
   document.getElementById('root')
 );
 
