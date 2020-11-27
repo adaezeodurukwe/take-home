@@ -11,14 +11,14 @@ export const cache = new InMemoryCache({
         },
         currentCurrency: {
           read () {
-            return currencyVar()
+            return currencyVar();
           }
         }
       }
     }
   }
-})
+});
 
-export const currencyVar = makeVar("NGN")
+export const currencyVar = makeVar("NGN");
 
-export const cartItemsVar = makeVar([])
+export const cartItemsVar = makeVar([]);

@@ -1,5 +1,7 @@
+import { array, func, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Close from '../assets/close.svg';
+import DisplayCurrency from './DisplayCurrency';
 
 
 const Sidebar = ({
@@ -16,28 +18,28 @@ const Sidebar = ({
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (products) {
+    if (products && products[0]) {
       let total = 0;
       cartItems.forEach(item => {
         total = (products[item.index].price * item.quantity) + total;
-      })
+      });
 
-      setTotal(total)
+      setTotal(total);
     }
 
-  }, [products, cartItems])
+  }, [products, cartItems]);
 
   const reduction = (quantity, id) => {
     if (quantity > 1) {
-      decreaseItemQuantity(id)
+      decreaseItemQuantity(id);
     } else {
-      removeItem(id)
+      removeItem(id);
     }
-  }
+  };
 
   return (
     <div className="sidebar">
-      <div className="backdrop" onClick={() => setOpen(false)}></div>
+      <div className="backdrop" onClick={() => setOpen(false)} />
       <div className="drawer">
         <div>
           <button onClick={() => setOpen(false)}>
@@ -66,7 +68,7 @@ const Sidebar = ({
                   <span>{product.quantity}</span>
                   <button onClick={() => increaseItemQuantity(product.id)}>+</button>
                 </div>
-                <span>{products ? products[product.index].price : ""}</span>
+                <span>{products && products[0] ? products[product.index].price : ""}</span>
                 <img width="40" src={product.image_url} alt="product" />
               </div>
             </div>
@@ -75,12 +77,30 @@ const Sidebar = ({
         
         <div className="total">
           <div className="todal-display">
-             Total: <span>{total}</span>
+             Total: <DisplayCurrency currentCurrency={currentCurrency} figure={total} />
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+Sidebar.propTypes = {
+  currencies: array,
+  increaseItemQuantity: func.isRequired,
+  decreaseItemQuantity: func.isRequired,
+  removeItem: func.isRequired,
+  cartItems: array,
+  setOpen: func.isRequired,
+  currentCurrency: string.isRequired,
+  setCurrency: func.isRequired,
+  products: array
+};
+
+Sidebar.defaultProps = {
+  currencies: [],
+  cartItems: [],
+  products: []
+};
+
+export default Sidebar;

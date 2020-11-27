@@ -11,4 +11,4 @@ export const cartMutations = {
   addItem: addItemToCart(cartItemsVar),
   removeItem: removeItemFromCart(cartItemsVar),
   setCurrency: setCurrency(currencyVar)
-}
+};

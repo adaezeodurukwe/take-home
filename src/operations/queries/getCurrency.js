@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_CURRENCIES = gql`
-  query getCurrency {
-    currency
+  query getCurrencyList {
+    currencyList @client
   }
 `;
 
